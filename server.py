@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from app import app  # Import the Flask app from app.py
 from Database import init_db  # Import database initialization function
 
+
 # Initialize the database
 init_db()
 
