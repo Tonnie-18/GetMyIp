@@ -1,18 +1,18 @@
-import requests
-from flask import Flask, request
+from flask import Flask, render_template, request
+import socket
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route("/")
 def home():
     # Get the client's IP address
-    client_ip = request.remote_addr
+    client_ip = request.headers.get('X-Forwarded-For', request.remote_addr)
     
-    # Fetch the server's public IP address using ipify
-    server_ip = requests.get('https://api.ipify.org').text
+    # Get the server's IP address
+    server_ip = socket.gethostbyname(socket.gethostname())
 
-    # Display both client and server IP addresses
-    return f"Your IP address is: {client_ip}<br>Server's public IP address is: {server_ip}"
+    # Pass both IPs to the HTML template
+    return render_template("index.html", client_ip=client_ip, server_ip=server_ip)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)
