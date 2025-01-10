@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request
 import socket
+import os
 
-app = Flask(__name__)
+# Set up Flask app
+app = Flask(__name__, template_folder="../templates")
 
 @app.route("/")
 def home():
